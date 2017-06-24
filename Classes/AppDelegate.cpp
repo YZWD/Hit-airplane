@@ -1,6 +1,6 @@
 #include "AppDelegate.h"
 #include "WelcomeScene.h"
-// Hit-airplane
+
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -16,7 +16,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::create("WeChat Airplane");
+        glview = GLViewImpl::create("WeChat Airplane");
         director->setOpenGLView(glview);
     }
 
@@ -26,7 +26,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
     
-    glview->setDesignResolutionSize(480, 800, ResolutionPolicy::EXACT_FIT);
+    glview->setDesignResolutionSize(480, 800, ResolutionPolicy::SHOW_ALL);
 
     this->setResourceSearchResolution();
     
@@ -38,6 +38,20 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     return true;
 }
+void AppDelegate::initGLContextAttrs()
+{
+    // set OpenGL context attributes: red,green,blue,alpha,depth,stencil
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
+//// if you want to use the package manager to install more packages,
+//// don't modify or remove this function
+//static int register_all_packages()
+//{
+//    return 0; //flag for packages manager
+//}
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
